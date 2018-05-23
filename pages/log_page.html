@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Avalon Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages div {
+            padding: 5px 10px;
+        }
+
+        #messages div:nth-child(odd) {
+            background: #eee;
+        }
+    </style>
+    <script src="/javascripts/socket.io.dev.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            socket.on('request log', function (msg) {
+                $('#messages').append($('<div class="wrapper">'));
+                $('.wrapper:last').append($('<p>').text(msg));
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="messages"></div>
+    <!--<form action="">
+        <input id="m" autocomplete="off" />
+        <button>Send</button>
+    </form>-->
+</body>
+
+</html>
