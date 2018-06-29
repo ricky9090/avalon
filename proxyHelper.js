@@ -1,12 +1,16 @@
 const http = require('http');
 const https = require('https');
 const zlib = require('zlib');
+const querystring = require('querystring');
 
-function proxyRequest(req, res, hostStr, method) {
+function proxyRequest(req, res, hostStr, netProtocol) {
   let options = optionFactoryWithHost(req, hostStr);
   console.log(options);
+  if (req.method === 'POST') {
+    console.log(req.body);
+  }
 
-  if (method === 'https') {
+  if (netProtocol === 'https') {
     doRequestHttps(options, req, res)
       .then(handleRealResponse)
       .then(handleMessage)
@@ -42,7 +46,12 @@ function doRequest(options, req, res) {
       reject(e);
     });
 
-    // write data to request body
+    console.log('request real server ...');
+    // POST请求时添加请求数据
+    if (req.method === 'POST') {
+      let postData = querystring.stringify(req.body);
+      innerReq.write(postData);
+    }
     innerReq.end();
   });
 }
@@ -66,7 +75,12 @@ function doRequestHttps(options, req, res) {
       reject(e);
     });
 
-    // write data to request body
+    console.log('request real server ...');
+    // POST请求时添加请求数据
+    if (req.method === 'POST') {
+      let postData = querystring.stringify(req.body);
+      innerReq.write(postData);
+    }
     innerReq.end();
   });
 }

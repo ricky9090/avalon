@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// add user router
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/avalon_log', logRouter);
