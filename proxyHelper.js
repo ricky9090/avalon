@@ -16,6 +16,8 @@ function proxyRequest(req, res, hostStr, netProtocol) {
       .then(handleMessage)
       .catch(function (e) {
         console.error(`problem with request: ${e.message}`);
+        res.statusCode = 500;
+        res.end();
       });
   } else {
     doRequest(options, req, res)
@@ -23,6 +25,8 @@ function proxyRequest(req, res, hostStr, netProtocol) {
       .then(handleMessage)
       .catch(function (e) {
         console.error(`problem with request: ${e.message}`);
+        res.statusCode = 500;
+        res.end();
       });
   }
 }
